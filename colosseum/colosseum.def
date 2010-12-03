@@ -1,0 +1,9 @@
+; colosseum.def : Declares the module parameters.
+
+LIBRARY      "colosseum.OCX"
+
+EXPORTS
+	DllCanUnloadNow     PRIVATE
+	DllGetClassObject   PRIVATE
+	DllRegisterServer   PRIVATE
+	DllUnregisterServer PRIVATE

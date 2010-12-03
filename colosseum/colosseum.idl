@@ -1,0 +1,52 @@
+// colosseum.idl : type library source for ActiveX Control project.
+
+// This file will be processed by the MIDL compiler tool to
+// produce the type library (colosseum.tlb) that will become a resource in
+// colosseum.ocx.
+
+#include <olectl.h>
+#include <idispids.h>
+
+[ uuid(EAB0C469-FB77-4B34-912F-B4F0F398EBF8), version(1.0),
+  helpfile("colosseum.hlp"),
+  helpstring("colosseum ActiveX Control module"),
+  control ]
+library colosseumLib
+{
+	importlib(STDOLE_TLB);
+
+	//  Primary dispatch interface for CcolosseumCtrl
+
+	[ uuid(E8B8A0AD-761C-4631-88CF-D5D2DDEAEE79),
+	  helpstring("Dispatch interface for colosseum Control")]
+	dispinterface _Dcolosseum
+	{
+		properties:
+		methods:
+
+			[id(DISPID_ABOUTBOX)] void AboutBox();
+	};
+
+	//  Event dispatch interface for CcolosseumCtrl
+
+	[ uuid(E9D4851E-590E-4C56-9CEF-9EC495961EDD),
+	  helpstring("Event interface for colosseum Control") ]
+	dispinterface _DcolosseumEvents
+	{
+		properties:
+			//  Event interface has no properties
+
+		methods:
+	};
+
+	//  Class information for CcolosseumCtrl
+
+	[ uuid(70217189-66E8-4874-9FD2-5352FDF46734),
+	  helpstring("colosseum Control"), control ]
+	coclass colosseum
+	{
+		[default] dispinterface _Dcolosseum;
+		[default, source] dispinterface _DcolosseumEvents;
+	};
+
+};
