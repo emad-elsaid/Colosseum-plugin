@@ -22,7 +22,10 @@ library colosseumLib
 	dispinterface _Dcolosseum
 	{
 		properties:
-		methods:
+			[id(1), helpstring("the viewer width in pixels")] LONG width;
+			[id(2), helpstring("the viewer height in pixels")] LONG height;
+			[id(3), helpstring("BIM server interface URL")] BSTR server;
+	methods:
 
 			[id(DISPID_ABOUTBOX)] void AboutBox();
 	};

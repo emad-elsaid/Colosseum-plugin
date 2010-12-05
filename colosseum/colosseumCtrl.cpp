@@ -27,6 +27,9 @@ END_MESSAGE_MAP()
 
 BEGIN_DISPATCH_MAP(CcolosseumCtrl, COleControl)
 	DISP_FUNCTION_ID(CcolosseumCtrl, "AboutBox", DISPID_ABOUTBOX, AboutBox, VT_EMPTY, VTS_NONE)
+	DISP_PROPERTY_EX_ID(CcolosseumCtrl, "width", dispidwidth, Getwidth, Setwidth, VT_I4)
+	DISP_PROPERTY_EX_ID(CcolosseumCtrl, "height", dispidheight, Getheight, Setheight, VT_I4)
+	DISP_PROPERTY_EX_ID(CcolosseumCtrl, "server", dispidserver, Getserver, Setserver, VT_BSTR)
 END_DISPATCH_MAP()
 
 
@@ -195,3 +198,59 @@ void CcolosseumCtrl::AboutBox()
 
 
 // CcolosseumCtrl message handlers
+
+LONG CcolosseumCtrl::Getwidth(void)
+{
+	AFX_MANAGE_STATE(AfxGetStaticModuleState());
+
+	// TODO: Add your dispatch handler code here
+
+	return 0;
+}
+
+void CcolosseumCtrl::Setwidth(LONG newVal)
+{
+	AFX_MANAGE_STATE(AfxGetStaticModuleState());
+
+	// TODO: Add your property handler code here
+
+	SetModifiedFlag();
+}
+
+LONG CcolosseumCtrl::Getheight(void)
+{
+	AFX_MANAGE_STATE(AfxGetStaticModuleState());
+
+	// TODO: Add your dispatch handler code here
+
+	return 0;
+}
+
+void CcolosseumCtrl::Setheight(LONG newVal)
+{
+	AFX_MANAGE_STATE(AfxGetStaticModuleState());
+
+	// TODO: Add your property handler code here
+
+	SetModifiedFlag();
+}
+
+BSTR CcolosseumCtrl::Getserver(void)
+{
+	AFX_MANAGE_STATE(AfxGetStaticModuleState());
+
+	CString strResult;
+
+	// TODO: Add your dispatch handler code here
+
+	return strResult.AllocSysString();
+}
+
+void CcolosseumCtrl::Setserver(LPCTSTR newVal)
+{
+	AFX_MANAGE_STATE(AfxGetStaticModuleState());
+
+	// TODO: Add your property handler code here
+
+	SetModifiedFlag();
+}

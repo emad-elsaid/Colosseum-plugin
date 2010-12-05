@@ -43,6 +43,16 @@ protected:
 // Dispatch and event IDs
 public:
 	enum {
+		dispidserver = 3,
+		dispidheight = 2,
+		dispidwidth = 1
 	};
+protected:
+	LONG Getwidth(void);
+	void Setwidth(LONG newVal);
+	LONG Getheight(void);
+	void Setheight(LONG newVal);
+	BSTR Getserver(void);
+	void Setserver(LPCTSTR newVal);
 };
 
