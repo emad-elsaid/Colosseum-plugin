@@ -12,14 +12,16 @@ class CcolosseumCtrl : public COleControl
 // Constructor
 public:
 	CcolosseumCtrl();
-
+	
 // Overrides
 public:
 	virtual void OnDraw(CDC* pdc, const CRect& rcBounds, const CRect& rcInvalid);
 	virtual void DoPropExchange(CPropExchange* pPX);
 	virtual void OnResetState();
 	virtual DWORD GetControlFlags();
+	
 
+	
 // Implementation
 protected:
 	~CcolosseumCtrl();
@@ -40,19 +42,21 @@ protected:
 // Event maps
 	DECLARE_EVENT_MAP()
 
+//Attributes or Properties
+	LONG m_width;
+	LONG m_height;
+	CString m_server;
+
+
 // Dispatch and event IDs
-public:
-	enum {
-		dispidserver = 3,
-		dispidheight = 2,
-		dispidwidth = 1
-	};
+
 protected:
-	LONG Getwidth(void);
-	void Setwidth(LONG newVal);
-	LONG Getheight(void);
-	void Setheight(LONG newVal);
-	BSTR Getserver(void);
-	void Setserver(LPCTSTR newVal);
+	
+	LONG GetWidth(void) const ; 
+	//void SetWidth(LONG newVal);
+	LONG GetHeight(void) const ;
+	//void SetHeight(LONG newVal);
+	BSTR GetServer(void) const;
+	//void Setserver(LPCTSTR newVal);
 };
 

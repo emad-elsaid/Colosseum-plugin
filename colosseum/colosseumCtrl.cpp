@@ -27,9 +27,6 @@ END_MESSAGE_MAP()
 
 BEGIN_DISPATCH_MAP(CcolosseumCtrl, COleControl)
 	DISP_FUNCTION_ID(CcolosseumCtrl, "AboutBox", DISPID_ABOUTBOX, AboutBox, VT_EMPTY, VTS_NONE)
-	DISP_PROPERTY_EX_ID(CcolosseumCtrl, "width", dispidwidth, Getwidth, Setwidth, VT_I4)
-	DISP_PROPERTY_EX_ID(CcolosseumCtrl, "height", dispidheight, Getheight, Setheight, VT_I4)
-	DISP_PROPERTY_EX_ID(CcolosseumCtrl, "server", dispidserver, Getserver, Setserver, VT_BSTR)
 END_DISPATCH_MAP()
 
 
@@ -116,11 +113,13 @@ BOOL CcolosseumCtrl::CcolosseumCtrlFactory::UpdateRegistry(BOOL bRegister)
 
 // CcolosseumCtrl::CcolosseumCtrl - Constructor
 
-CcolosseumCtrl::CcolosseumCtrl()
+CcolosseumCtrl::CcolosseumCtrl() : m_width(0), m_height(0), m_server("")
 {
 	InitializeIIDs(&IID_Dcolosseum, &IID_DcolosseumEvents);
 	// TODO: Initialize your control's instance data here.
+	
 }
+
 
 
 
@@ -140,10 +139,11 @@ void CcolosseumCtrl::OnDraw(
 {
 	if (!pdc)
 		return;
-
 	// TODO: Replace the following code with your own drawing code.
 	pdc->FillRect(rcBounds, CBrush::FromHandle((HBRUSH)GetStockObject(WHITE_BRUSH)));
 	pdc->Ellipse(rcBounds);
+	m_width = rcBounds.Width();
+	m_height = rcBounds.Height();
 }
 
 
@@ -154,8 +154,9 @@ void CcolosseumCtrl::DoPropExchange(CPropExchange* pPX)
 {
 	ExchangeVersion(pPX, MAKELONG(_wVerMinor, _wVerMajor));
 	COleControl::DoPropExchange(pPX);
-
 	// TODO: Call PX_ functions for each persistent custom property.
+	
+	PX_String(pPX, _T("server"), m_server, L"");
 }
 
 
@@ -181,7 +182,7 @@ DWORD CcolosseumCtrl::GetControlFlags()
 void CcolosseumCtrl::OnResetState()
 {
 	COleControl::OnResetState();  // Resets defaults found in DoPropExchange
-
+	
 	// TODO: Reset any other control state here.
 }
 
@@ -196,61 +197,19 @@ void CcolosseumCtrl::AboutBox()
 }
 
 
-
 // CcolosseumCtrl message handlers
 
-LONG CcolosseumCtrl::Getwidth(void)
+LONG CcolosseumCtrl::GetHeight() const
 {
-	AFX_MANAGE_STATE(AfxGetStaticModuleState());
-
-	// TODO: Add your dispatch handler code here
-
-	return 0;
+	return m_height;
 }
 
-void CcolosseumCtrl::Setwidth(LONG newVal)
+LONG CcolosseumCtrl::GetWidth() const
 {
-	AFX_MANAGE_STATE(AfxGetStaticModuleState());
-
-	// TODO: Add your property handler code here
-
-	SetModifiedFlag();
+	return m_width;
 }
 
-LONG CcolosseumCtrl::Getheight(void)
+BSTR CcolosseumCtrl::GetServer() const
 {
-	AFX_MANAGE_STATE(AfxGetStaticModuleState());
-
-	// TODO: Add your dispatch handler code here
-
-	return 0;
-}
-
-void CcolosseumCtrl::Setheight(LONG newVal)
-{
-	AFX_MANAGE_STATE(AfxGetStaticModuleState());
-
-	// TODO: Add your property handler code here
-
-	SetModifiedFlag();
-}
-
-BSTR CcolosseumCtrl::Getserver(void)
-{
-	AFX_MANAGE_STATE(AfxGetStaticModuleState());
-
-	CString strResult;
-
-	// TODO: Add your dispatch handler code here
-
-	return strResult.AllocSysString();
-}
-
-void CcolosseumCtrl::Setserver(LPCTSTR newVal)
-{
-	AFX_MANAGE_STATE(AfxGetStaticModuleState());
-
-	// TODO: Add your property handler code here
-
-	SetModifiedFlag();
+	return m_server.AllocSysString();
 }
