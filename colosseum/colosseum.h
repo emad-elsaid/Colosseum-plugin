@@ -9,9 +9,9 @@
 #include "resource.h"       // main symbols
 
 
-// CcolosseumApp : See colosseum.cpp for implementation.
+// CColosseumApp : See colosseum.cpp for implementation.
 
-class CcolosseumApp : public COleControlModule
+class CColosseumApp : public COleControlModule
 {
 public:
 	BOOL InitInstance();

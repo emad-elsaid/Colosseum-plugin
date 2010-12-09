@@ -15,7 +15,7 @@ library colosseumLib
 {
 	importlib(STDOLE_TLB);
 
-	//  Primary dispatch interface for CcolosseumCtrl
+	//  Primary dispatch interface for CColosseumCtrl
 
 	[ uuid(E8B8A0AD-761C-4631-88CF-D5D2DDEAEE79),
 	  helpstring("Dispatch interface for colosseum Control")]
@@ -30,7 +30,7 @@ library colosseumLib
 			[id(DISPID_ABOUTBOX)] void AboutBox();
 	};
 
-	//  Event dispatch interface for CcolosseumCtrl
+	//  Event dispatch interface for CColosseumCtrl
 
 	[ uuid(E9D4851E-590E-4C56-9CEF-9EC495961EDD),
 	  helpstring("Event interface for colosseum Control") ]
@@ -42,7 +42,7 @@ library colosseumLib
 		methods:
 	};
 
-	//  Class information for CcolosseumCtrl
+	//  Class information for CColosseumCtrl
 
 	[ uuid(70217189-66E8-4874-9FD2-5352FDF46734),
 	  helpstring("colosseum Control"), control ]

@@ -1,4 +1,4 @@
-// colosseum.cpp : Implementation of CcolosseumApp and DLL registration.
+// colosseum.cpp : Implementation of CColosseumApp and DLL registration.
 
 #include "stdafx.h"
 #include "colosseum.h"
@@ -8,7 +8,7 @@
 #endif
 
 
-CcolosseumApp theApp;
+CColosseumApp theApp;
 
 const GUID CDECL BASED_CODE _tlid =
 		{ 0xEAB0C469, 0xFB77, 0x4B34, { 0x91, 0x2F, 0xB4, 0xF0, 0xF3, 0x98, 0xEB, 0xF8 } };
@@ -17,9 +17,9 @@ const WORD _wVerMinor = 0;
 
 
 
-// CcolosseumApp::InitInstance - DLL initialization
+// CColosseumApp::InitInstance - DLL initialization
 
-BOOL CcolosseumApp::InitInstance()
+BOOL CColosseumApp::InitInstance()
 {
 	BOOL bInit = COleControlModule::InitInstance();
 
@@ -33,9 +33,9 @@ BOOL CcolosseumApp::InitInstance()
 
 
 
-// CcolosseumApp::ExitInstance - DLL termination
+// CColosseumApp::ExitInstance - DLL termination
 
-int CcolosseumApp::ExitInstance()
+int CColosseumApp::ExitInstance()
 {
 	// TODO: Add your own module termination code here.
 

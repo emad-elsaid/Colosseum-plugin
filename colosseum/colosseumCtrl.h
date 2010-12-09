@@ -1,17 +1,17 @@
 #pragma once
 
-// colosseumCtrl.h : Declaration of the CcolosseumCtrl ActiveX Control class.
+// colosseumCtrl.h : Declaration of the CColosseumCtrl ActiveX Control class.
 
 
-// CcolosseumCtrl : See colosseumCtrl.cpp for implementation.
+// CColosseumCtrl : See colosseumCtrl.cpp for implementation.
 
-class CcolosseumCtrl : public COleControl
+class CColosseumCtrl : public COleControl
 {
-	DECLARE_DYNCREATE(CcolosseumCtrl)
+	DECLARE_DYNCREATE(CColosseumCtrl)
 
 // Constructor
 public:
-	CcolosseumCtrl();
+	CColosseumCtrl();
 	
 // Overrides
 public:
@@ -24,12 +24,12 @@ public:
 	
 // Implementation
 protected:
-	~CcolosseumCtrl();
+	~CColosseumCtrl();
 
-	DECLARE_OLECREATE_EX(CcolosseumCtrl)    // Class factory and guid
-	DECLARE_OLETYPELIB(CcolosseumCtrl)      // GetTypeInfo
-	DECLARE_PROPPAGEIDS(CcolosseumCtrl)     // Property page IDs
-	DECLARE_OLECTLTYPE(CcolosseumCtrl)		// Type name and misc status
+	DECLARE_OLECREATE_EX(CColosseumCtrl)    // Class factory and guid
+	DECLARE_OLETYPELIB(CColosseumCtrl)      // GetTypeInfo
+	DECLARE_PROPPAGEIDS(CColosseumCtrl)     // Property page IDs
+	DECLARE_OLECTLTYPE(CColosseumCtrl)		// Type name and misc status
 
 // Message maps
 	DECLARE_MESSAGE_MAP()

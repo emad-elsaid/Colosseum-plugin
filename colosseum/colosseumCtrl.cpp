@@ -1,4 +1,4 @@
-// colosseumCtrl.cpp : Implementation of the CcolosseumCtrl ActiveX Control class.
+// colosseumCtrl.cpp : Implementation of the CColosseumCtrl ActiveX Control class.
 
 #include "stdafx.h"
 #include "colosseum.h"
@@ -11,13 +11,13 @@
 #endif
 
 
-IMPLEMENT_DYNCREATE(CcolosseumCtrl, COleControl)
+IMPLEMENT_DYNCREATE(CColosseumCtrl, COleControl)
 
 
 
 // Message map
 
-BEGIN_MESSAGE_MAP(CcolosseumCtrl, COleControl)
+BEGIN_MESSAGE_MAP(CColosseumCtrl, COleControl)
 	ON_OLEVERB(AFX_IDS_VERB_PROPERTIES, OnProperties)
 END_MESSAGE_MAP()
 
@@ -25,15 +25,15 @@ END_MESSAGE_MAP()
 
 // Dispatch map
 
-BEGIN_DISPATCH_MAP(CcolosseumCtrl, COleControl)
-	DISP_FUNCTION_ID(CcolosseumCtrl, "AboutBox", DISPID_ABOUTBOX, AboutBox, VT_EMPTY, VTS_NONE)
+BEGIN_DISPATCH_MAP(CColosseumCtrl, COleControl)
+	DISP_FUNCTION_ID(CColosseumCtrl, "AboutBox", DISPID_ABOUTBOX, AboutBox, VT_EMPTY, VTS_NONE)
 END_DISPATCH_MAP()
 
 
 
 // Event map
 
-BEGIN_EVENT_MAP(CcolosseumCtrl, COleControl)
+BEGIN_EVENT_MAP(CColosseumCtrl, COleControl)
 END_EVENT_MAP()
 
 
@@ -41,22 +41,22 @@ END_EVENT_MAP()
 // Property pages
 
 // TODO: Add more property pages as needed.  Remember to increase the count!
-BEGIN_PROPPAGEIDS(CcolosseumCtrl, 1)
+BEGIN_PROPPAGEIDS(CColosseumCtrl, 1)
 	PROPPAGEID(CcolosseumPropPage::guid)
-END_PROPPAGEIDS(CcolosseumCtrl)
+END_PROPPAGEIDS(CColosseumCtrl)
 
 
 
 // Initialize class factory and guid
 
-IMPLEMENT_OLECREATE_EX(CcolosseumCtrl, "COLOSSEUM.colosseumCtrl.1",
+IMPLEMENT_OLECREATE_EX(CColosseumCtrl, "COLOSSEUM.colosseumCtrl.1",
 	0x70217189, 0x66e8, 0x4874, 0x9f, 0xd2, 0x53, 0x52, 0xfd, 0xf4, 0x67, 0x34)
 
 
 
 // Type library ID and version
 
-IMPLEMENT_OLETYPELIB(CcolosseumCtrl, _tlid, _wVerMajor, _wVerMinor)
+IMPLEMENT_OLETYPELIB(CColosseumCtrl, _tlid, _wVerMajor, _wVerMinor)
 
 
 
@@ -78,14 +78,14 @@ static const DWORD BASED_CODE _dwcolosseumOleMisc =
 	OLEMISC_CANTLINKINSIDE |
 	OLEMISC_RECOMPOSEONRESIZE;
 
-IMPLEMENT_OLECTLTYPE(CcolosseumCtrl, IDS_COLOSSEUM, _dwcolosseumOleMisc)
+IMPLEMENT_OLECTLTYPE(CColosseumCtrl, IDS_COLOSSEUM, _dwcolosseumOleMisc)
 
 
 
-// CcolosseumCtrl::CcolosseumCtrlFactory::UpdateRegistry -
-// Adds or removes system registry entries for CcolosseumCtrl
+// CColosseumCtrl::CColosseumCtrlFactory::UpdateRegistry -
+// Adds or removes system registry entries for CColosseumCtrl
 
-BOOL CcolosseumCtrl::CcolosseumCtrlFactory::UpdateRegistry(BOOL bRegister)
+BOOL CColosseumCtrl::CColosseumCtrlFactory::UpdateRegistry(BOOL bRegister)
 {
 	// TODO: Verify that your control follows apartment-model threading rules.
 	// Refer to MFC TechNote 64 for more information.
@@ -111,9 +111,9 @@ BOOL CcolosseumCtrl::CcolosseumCtrlFactory::UpdateRegistry(BOOL bRegister)
 
 
 
-// CcolosseumCtrl::CcolosseumCtrl - Constructor
+// CColosseumCtrl::CColosseumCtrl - Constructor
 
-CcolosseumCtrl::CcolosseumCtrl() : m_width(0), m_height(0), m_server("")
+CColosseumCtrl::CColosseumCtrl() : m_width(0), m_height(0), m_server("")
 {
 	InitializeIIDs(&IID_Dcolosseum, &IID_DcolosseumEvents);
 	// TODO: Initialize your control's instance data here.
@@ -123,18 +123,18 @@ CcolosseumCtrl::CcolosseumCtrl() : m_width(0), m_height(0), m_server("")
 
 
 
-// CcolosseumCtrl::~CcolosseumCtrl - Destructor
+// CColosseumCtrl::~CColosseumCtrl - Destructor
 
-CcolosseumCtrl::~CcolosseumCtrl()
+CColosseumCtrl::~CColosseumCtrl()
 {
 	// TODO: Cleanup your control's instance data here.
 }
 
 
 
-// CcolosseumCtrl::OnDraw - Drawing function
+// CColosseumCtrl::OnDraw - Drawing function
 
-void CcolosseumCtrl::OnDraw(
+void CColosseumCtrl::OnDraw(
 			CDC* pdc, const CRect& rcBounds, const CRect& rcInvalid)
 {
 	if (!pdc)
@@ -148,9 +148,9 @@ void CcolosseumCtrl::OnDraw(
 
 
 
-// CcolosseumCtrl::DoPropExchange - Persistence support
+// CColosseumCtrl::DoPropExchange - Persistence support
 
-void CcolosseumCtrl::DoPropExchange(CPropExchange* pPX)
+void CColosseumCtrl::DoPropExchange(CPropExchange* pPX)
 {
 	ExchangeVersion(pPX, MAKELONG(_wVerMinor, _wVerMajor));
 	COleControl::DoPropExchange(pPX);
@@ -161,10 +161,10 @@ void CcolosseumCtrl::DoPropExchange(CPropExchange* pPX)
 
 
 
-// CcolosseumCtrl::GetControlFlags -
+// CColosseumCtrl::GetControlFlags -
 // Flags to customize MFC's implementation of ActiveX controls.
 //
-DWORD CcolosseumCtrl::GetControlFlags()
+DWORD CColosseumCtrl::GetControlFlags()
 {
 	DWORD dwFlags = COleControl::GetControlFlags();
 
@@ -177,9 +177,9 @@ DWORD CcolosseumCtrl::GetControlFlags()
 
 
 
-// CcolosseumCtrl::OnResetState - Reset control to default state
+// CColosseumCtrl::OnResetState - Reset control to default state
 
-void CcolosseumCtrl::OnResetState()
+void CColosseumCtrl::OnResetState()
 {
 	COleControl::OnResetState();  // Resets defaults found in DoPropExchange
 	
@@ -188,28 +188,28 @@ void CcolosseumCtrl::OnResetState()
 
 
 
-// CcolosseumCtrl::AboutBox - Display an "About" box to the user
+// CColosseumCtrl::AboutBox - Display an "About" box to the user
 
-void CcolosseumCtrl::AboutBox()
+void CColosseumCtrl::AboutBox()
 {
 	CDialog dlgAbout(IDD_ABOUTBOX_COLOSSEUM);
 	dlgAbout.DoModal();
 }
 
 
-// CcolosseumCtrl message handlers
+// CColosseumCtrl message handlers
 
-LONG CcolosseumCtrl::GetHeight() const
+LONG CColosseumCtrl::GetHeight() const
 {
 	return m_height;
 }
 
-LONG CcolosseumCtrl::GetWidth() const
+LONG CColosseumCtrl::GetWidth() const
 {
 	return m_width;
 }
 
-BSTR CcolosseumCtrl::GetServer() const
+BSTR CColosseumCtrl::GetServer() const
 {
 	return m_server.AllocSysString();
 }

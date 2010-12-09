@@ -44,13 +44,13 @@ colosseum.ico
     is included by the main resource file colosseum.rc.
 
 /////////////////////////////////////////////////////////////////////////////
-CcolosseumCtrl control:
+CColosseumCtrl control:
 
 colosseumCtrl.h
-    This file contains the declaration of the CcolosseumCtrl C++ class.
+    This file contains the declaration of the CColosseumCtrl C++ class.
 
 colosseumCtrl.cpp
-    This file contains the implementation of the CcolosseumCtrl C++ class.
+    This file contains the implementation of the CColosseumCtrl C++ class.
 
 colosseumPropPage.h
     This file contains the declaration of the CcolosseumPropPage C++ class.
@@ -58,9 +58,9 @@ colosseumPropPage.h
 colosseumPropPage.cpp
     This file contains the implementation of the CcolosseumPropPage C++ class.
 
-CcolosseumCtrl.bmp
+CColosseumCtrl.bmp
     This file contains a bitmap that a container will use to represent the
-    CcolosseumCtrl control when it appears on a tool palette.  This bitmap
+    CColosseumCtrl control when it appears on a tool palette.  This bitmap
     is included by the main resource file colosseum.rc.
 
 /////////////////////////////////////////////////////////////////////////////
