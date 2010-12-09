@@ -254,6 +254,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\IFCEngine.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Resource.h"
 				>
 			</File>
