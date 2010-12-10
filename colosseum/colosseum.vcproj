@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="colosseum"
+	Name="Colosseum"
 	ProjectGUID="{A54AFCB8-E778-4CFD-B95A-12981CE4D7B6}"
 	RootNamespace="colosseum"
 	Keyword="MFCActiveXProj"
@@ -47,6 +47,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
+				AdditionalIncludeDirectories="&quot;E:\Dev\Microsoft DirectX SDK (August 2009)\Include&quot;"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -70,8 +71,10 @@
 			<Tool
 				Name="VCLinkerTool"
 				RegisterOutput="true"
+				AdditionalDependencies=" d3dx9.lib d3d9.lib"
 				OutputFile="$(OutDir)\$(ProjectName).ocx"
 				LinkIncremental="2"
+				AdditionalLibraryDirectories="&quot;E:\Dev\Microsoft DirectX SDK (August 2009)\Lib\x86&quot;"
 				ModuleDefinitionFile=".\colosseum.def"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -196,6 +199,10 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\Camera.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\colosseum.cpp"
 				>
 			</File>
@@ -241,6 +248,10 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath=".\Camera.h"
+				>
+			</File>
 			<File
 				RelativePath=".\colosseum.h"
 				>

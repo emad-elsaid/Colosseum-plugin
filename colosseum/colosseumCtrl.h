@@ -1,6 +1,24 @@
 #pragma once
 
+
+
 // colosseumCtrl.h : Declaration of the CColosseumCtrl ActiveX Control class.
+/* DirectX 9 header files */
+#include <d3d9.h>
+#include <d3dx9.h>
+#include "Camera.h"
+/* The format of each vertex */
+
+#define		D3DFVF_CUSTOMVERTEX (D3DFVF_XYZ | D3DFVF_NORMAL)
+
+typedef struct CUSTOMVERTEX {
+	float	x;
+	float	y;
+	float	z;
+	float	nx;
+	float	ny;
+	float	nz;
+}	customvertex;
 
 
 // CColosseumCtrl : See colosseumCtrl.cpp for implementation.
@@ -13,6 +31,8 @@ class CColosseumCtrl : public COleControl
 public:
 	CColosseumCtrl();
 	
+	
+
 // Overrides
 public:
 	virtual void OnDraw(CDC* pdc, const CRect& rcBounds, const CRect& rcInvalid);
@@ -20,11 +40,16 @@ public:
 	virtual void OnResetState();
 	virtual DWORD GetControlFlags();
 	
-
+	
+	
 	
 // Implementation
 protected:
 	~CColosseumCtrl();
+	
+
+	virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
+
 
 	DECLARE_OLECREATE_EX(CColosseumCtrl)    // Class factory and guid
 	DECLARE_OLETYPELIB(CColosseumCtrl)      // GetTypeInfo
@@ -42,11 +67,28 @@ protected:
 // Event maps
 	DECLARE_EVENT_MAP()
 
-//Attributes or Properties
+//Attributes and Properties
 	LONG m_width;
 	LONG m_height;
 	CString m_server;
+	HWND m_hwndRenderWindow;
+	bool m_initialized;
 
+	LPDIRECT3D9            m_pD3D;			// Used to create the D3DDevice
+	LPDIRECT3DDEVICE9       m_pd3dDevice;	// Our rendering device
+	LPDIRECT3DVERTEXBUFFER9 m_pVB;			// Buffer to hold vertices
+
+    D3DPRESENT_PARAMETERS	m_d3dpp;
+
+/* DirectX related functions */
+	void	initializeDevice();
+	void	initializeDeviceBuffer();
+	void	render();
+	int		setupLights();
+	int		setupMatrices();
+
+private:
+	const float MULTIPLY_RATIO ;
 
 // Dispatch and event IDs
 
@@ -59,4 +101,3 @@ protected:
 	BSTR GetServer(void) const;
 	//void Setserver(LPCTSTR newVal);
 };
-

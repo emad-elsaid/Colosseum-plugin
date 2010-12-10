@@ -1,4 +1,4 @@
-//Microsoft Visual C++ generated resource script.
+// Microsoft Visual C++ generated resource script.
 //
 #include "resource.h"
 
@@ -15,33 +15,41 @@
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
 
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
 //
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE
+1 TEXTINCLUDE 
 BEGIN
-	"resource.h\0"
+    "resource.h\0"
 END
 
-2 TEXTINCLUDE
+2 TEXTINCLUDE 
 BEGIN
-	"#ifndef APSTUDIO_INVOKED\r\n"
+    "#ifndef APSTUDIO_INVOKED\r\n"
     "#include ""targetver.h""\r\n"
     "#endif\r\n"
-	"#include ""afxres.h""\r\n"
-	"\0"
-END
-
-3 TEXTINCLUDE
-BEGIN
-	"1 TYPELIB ""colosseum.tlb""\r\n"
+    "#include ""afxres.h""\r\n"
     "\0"
 END
 
-/////////////////////////////////////////////////////////////////////////////
+3 TEXTINCLUDE 
+BEGIN
+    "1 TYPELIB ""colosseum.tlb""\r\n"
+    "\0"
+END
+
 #endif    // APSTUDIO_INVOKED
 
 
@@ -75,14 +83,14 @@ BEGIN
             VALUE "OriginalFilename", "colosseum.ocx"
             VALUE "ProductName", "TODO: <Product name>"
             VALUE "ProductVersion", "1.0.0.1"
-            VALUE "OLESelfRegister", ""
         END
     END
     BLOCK "VarFileInfo"
     BEGIN
-		VALUE "Translation", 0x0409, 1252
+        VALUE "Translation", 0x409, 1252
     END
 END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -91,14 +99,14 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDI_ABOUTDLL    ICON         "colosseum.ico"
+IDI_ABOUTDLL            ICON                    "colosseum.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // Bitmap
 //
 
-IDB_COLOSSEUM   BITMAP   "colosseumCtrl.bmp"
+IDB_COLOSSEUM           BITMAP                  "colosseumCtrl.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -108,7 +116,7 @@ IDB_COLOSSEUM   BITMAP   "colosseumCtrl.bmp"
 IDD_ABOUTBOX_COLOSSEUM DIALOGEX 0, 0, 170, 62
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "About colosseum Control"
-FONT 8, "MS Shell Dlg"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     ICON            IDI_ABOUTDLL,IDC_STATIC,14,14,21,20
     LTEXT           "colosseum Control, Version 1.0",IDC_STATIC,42,14,114,8,SS_NOPREFIX
@@ -116,12 +124,17 @@ BEGIN
     DEFPUSHBUTTON   "OK",IDOK,113,41,50,14,WS_GROUP
 END
 
-IDD_PROPPAGE_COLOSSEUM DIALOG   0, 0, 250, 62
-STYLE WS_CHILD
+IDD_PROPPAGE_COLOSSEUM DIALOG  0, 0, 250, 62
+STYLE DS_SETFONT | WS_CHILD
 FONT 8, "MS Shell Dlg"
 BEGIN
-    LTEXT           "TODO: Place controls to manipulate properties of colosseum Control on this dialog.",
-                    IDC_STATIC,7,25,229,16
+    LTEXT           "TODO: Place controls to manipulate properties of colosseum Control on this dialog.",IDC_STATIC,7,25,229,16
+END
+
+IDD_FORMVIEW DIALOGEX 0, 0, 185, 93
+STYLE DS_SETFONT | WS_CHILD
+FONT 8, "Microsoft Sans Serif", 400, 0, 0x0
+BEGIN
 END
 
 
@@ -131,7 +144,7 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO
+GUIDELINES DESIGNINFO 
 BEGIN
     IDD_ABOUTBOX_COLOSSEUM, DIALOG
     BEGIN
@@ -140,6 +153,7 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 55
     END
+
     IDD_PROPPAGE_COLOSSEUM, DIALOG
     BEGIN
         LEFTMARGIN, 7
@@ -147,21 +161,37 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 55
     END
+
+    IDD_FORMVIEW, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 178
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 86
+    END
 END
 #endif    // APSTUDIO_INVOKED
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // String Table
 //
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
-	IDS_COLOSSEUM               "colosseum Control"
-	IDS_COLOSSEUM_PPG           "colosseum Property Page"
-	IDS_COLOSSEUM_PPG_CAPTION   "General"
-
+    IDS_COLOSSEUM           "colosseum Control"
+    IDS_COLOSSEUM_PPG       "colosseum Property Page"
 END
+
+STRINGTABLE 
+BEGIN
+    IDS_COLOSSEUM_PPG_CAPTION "General"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
 
 
 #ifndef APSTUDIO_INVOKED
