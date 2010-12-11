@@ -2,11 +2,13 @@
 
 #include "stdafx.h"
 #include "colosseum.h"
+#include "IFCEngineInteract.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
+extern	char	* g_ifcSchemaName;
 
 CColosseumApp theApp;
 
@@ -26,6 +28,11 @@ BOOL CColosseumApp::InitInstance()
 	if (bInit)
 	{
 		// TODO: Add your own module initialization code here.
+		
+		/* Intialize the schema name*/
+		g_ifcSchemaName = new char[strlen("E:\\Dev\\Colosseum-plugin\\Debug\\IFC2X3_TC1.exp")+1];
+		memcpy(g_ifcSchemaName, "E:\\Dev\\Colosseum-plugin\\Debug\\IFC2X3_TC1.exp", strlen("E:\\Dev\\Colosseum-plugin\\Debug\\IFC2X3_TC1.exp")+1);
+
 	}
 
 	return bInit;
@@ -38,7 +45,8 @@ BOOL CColosseumApp::InitInstance()
 int CColosseumApp::ExitInstance()
 {
 	// TODO: Add your own module termination code here.
-
+	delete g_ifcSchemaName;
+	g_ifcSchemaName = NULL;
 	return COleControlModule::ExitInstance();
 }
 

@@ -22,7 +22,7 @@
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
 			UseOfMFC="2"
-			CharacterSet="1"
+			CharacterSet="2"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -71,7 +71,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				RegisterOutput="true"
-				AdditionalDependencies=" d3dx9.lib d3d9.lib"
+				AdditionalDependencies="IFCEngine.lib d3dx9.lib d3d9.lib"
 				OutputFile="$(OutDir)\$(ProjectName).ocx"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;E:\Dev\Microsoft DirectX SDK (August 2009)\Lib\x86&quot;"
@@ -223,6 +223,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\IFCEngineInteract.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\stdafx.cpp"
 				>
 				<FileConfiguration
@@ -266,6 +270,10 @@
 			</File>
 			<File
 				RelativePath=".\IFCEngine.h"
+				>
+			</File>
+			<File
+				RelativePath=".\IFCEngineInteract.h"
 				>
 			</File>
 			<File

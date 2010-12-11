@@ -4,6 +4,7 @@
 #include "colosseum.h"
 #include "colosseumCtrl.h"
 #include "colosseumPropPage.h"
+#include "IFCEngineInteract.h"
 #include <assert.h>
 
 #ifdef _DEBUG
@@ -13,10 +14,11 @@
 /* An error indication value non-zero if error exists */
 int		g_directXStatus = 0;
 CCamera *g_camera = new CCamera(D3DXVECTOR3(0,0,-2.5f));
+float	* g_pVerticesDeviceBuffer;
 
-/* TODO get the real values from IfcInteract module*/
-int g_noVertices = 0;
-int g_noIndices = 0;
+extern int		g_noVertices, g_noIndices, * g_pIndices;
+extern float	* g_pVertices;
+
 D3DXVECTOR3		g_vecOrigin;
 
 IMPLEMENT_DYNCREATE(CColosseumCtrl, COleControl)
@@ -130,7 +132,7 @@ CColosseumCtrl::CColosseumCtrl() : m_width(0), m_height(0), m_server(""), MULTIP
 	m_pd3dDevice = NULL;
 	m_pVB = NULL;
 	m_initialized = false;
-
+	m_engineInteract = new CIFCEngineInteract();
 	/* Reset D3DPRESENT_PARAMETERS structure */
 	memset( &m_d3dpp, 0, sizeof(m_d3dpp) );
 	
@@ -144,6 +146,14 @@ LRESULT CColosseumCtrl::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 	{
 	
 		case WM_SHOWWINDOW:
+			switch	(m_engineInteract->retrieveObjectGroups((m_server.GetBuffer(0)))) {
+			case 0:
+				m_engineInteract->enrichObjectGroups();
+				break;
+			default:
+				ASSERT(1==0);
+				break;
+			}
 			CRect rc;
 			this->GetWindowRect(&rc);
 			m_width = rc.Width();
@@ -152,12 +162,11 @@ LRESULT CColosseumCtrl::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			m_hwndRenderWindow = this->m_hWnd;
 			initializeDevice();
 			
-			m_initialized = true;
+			
 			break;
 	}
-
 	if(m_initialized)
-		render();
+			render();
 	return COleControl::WindowProc(message, wParam, lParam);
 	
 }
@@ -169,7 +178,7 @@ LRESULT CColosseumCtrl::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 CColosseumCtrl::~CColosseumCtrl()
 {
 	// TODO: Cleanup your control's instance data here.
-
+	delete m_engineInteract;
 }
 
 
@@ -184,10 +193,6 @@ void CColosseumCtrl::OnDraw(
 	// TODO: Replace the following code with your own drawing code.
 	//pdc->FillRect(rcBounds, CBrush::FromHandle((HBRUSH)GetStockObject(WHITE_BRUSH)));
 	//pdc->Ellipse(rcBounds);
-	
-	
-	
-	
 }
 
 
@@ -200,7 +205,7 @@ void CColosseumCtrl::DoPropExchange(CPropExchange* pPX)
 	// TODO: Call PX_ functions for each persistent custom property.
 	
 	
-	PX_String(pPX, _T("server"), m_server, L"");
+	PX_String(pPX, _T("server"), m_server, _T(""));
 	
 }
 
@@ -341,18 +346,18 @@ void	CColosseumCtrl::initializeDeviceBuffer()
 				return;
 			}
 
-			/*if( FAILED( m_pVB->Lock( 0, 0, (void **)&pVerticesDeviceBuffer, 0 ) ) ) {
+			if( FAILED( m_pVB->Lock( 0, 0, (void **)&g_pVerticesDeviceBuffer, 0 ) ) ) {
 				ASSERT(1==0);
 				return;
 			}
 
 			int i = 0;
-			while  (i < noIndices) {
-				ASSERT(pIndices[i] < noVertices);
-				memcpy(&(((CUSTOMVERTEX *) pVerticesDeviceBuffer)[i]), &(((CUSTOMVERTEX *) pVertices)[pIndices[i]]), sizeof(CUSTOMVERTEX));
+			while  (i < g_noIndices) {
+				ASSERT(g_pIndices[i] < g_noVertices);
+				memcpy(&(((CUSTOMVERTEX *) g_pVerticesDeviceBuffer)[i]), &(((CUSTOMVERTEX *) g_pVertices)[g_pIndices[i]]), sizeof(CUSTOMVERTEX));
 
 				i++;
-			}*/
+			}
 
 			if	(FAILED( m_pVB->Unlock())) {
 				ASSERT(1==0);
@@ -373,28 +378,28 @@ void	CColosseumCtrl::render()
 		}
 		
 		// Begin the scene
-		/*if	(SUCCEEDED(g_pd3dDevice->BeginScene()))
+		if	(SUCCEEDED(m_pd3dDevice->BeginScene()))
 		{
 			// Setup the lights and materials
-			if	(SetupLights()) {
-				g_g_directXStatus = -1;
+			if	(setupLights()) {
+				g_directXStatus = -1;
 				return;
 			}
 
 			// Setup the world, view, and projection matrices
-			if	(SetupMatrices()) {
-				g_g_directXStatus = -1;
+			if	(setupMatrices()) {
+				g_directXStatus = -1;
 				return;
 			}
 
 
-			if	(g_pd3dDevice->SetStreamSource(0, g_pVB, 0, sizeof(CUSTOMVERTEX))) {
-				g_g_directXStatus = -1;
+			if	(m_pd3dDevice->SetStreamSource(0, m_pVB, 0, sizeof(CUSTOMVERTEX))) {
+				g_directXStatus = -1;
 				return;
 			}
 
-			g_pd3dDevice->SetVertexShader(NULL);
-			g_pd3dDevice->SetFVF(D3DFVF_CUSTOMVERTEX);
+			m_pd3dDevice->SetVertexShader(NULL);
+			m_pd3dDevice->SetFVF(D3DFVF_CUSTOMVERTEX);
 
 
 			D3DMATERIAL9	mtrl;
@@ -407,24 +412,24 @@ void	CColosseumCtrl::render()
 			mtrl.Emissive.b = 0.02f;
 			mtrl.Emissive.a = 0.5f;
 
-			g_pd3dDevice->SetMaterial(&mtrl);
-
-			STRUCT_INSTANCES	* instance = first_instance;
+			m_pd3dDevice->SetMaterial(&mtrl);
+			//TODO: make first instance private
+			STRUCT_INSTANCES	* instance = m_engineInteract->getFirstInstance();
 			while  (instance) {
 				if	( (instance->parent)  &&
 					  (instance->select == ITEM_CHECKED) ){
-					g_pd3dDevice->DrawPrimitive(D3DPT_TRIANGLELIST, instance->startIndex, instance->primitiveCount);  
+					m_pd3dDevice->DrawPrimitive(D3DPT_TRIANGLELIST, instance->startIndex, instance->primitiveCount);  
 				}
 
 				instance = instance->next;
 			}
 
 			// End the scene
-			if( FAILED( g_pd3dDevice->EndScene() ) ) {
-				g_g_directXStatus = -1;
+			if( FAILED( m_pd3dDevice->EndScene() ) ) {
+				g_directXStatus = -1;
 				return;
 			}
-		}*/
+		}
 
 		// Present the backbuffer contents to the display
 		if( FAILED( m_pd3dDevice->Present( NULL, NULL, NULL, NULL ) ) ) {

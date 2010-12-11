@@ -7,6 +7,8 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 #include "Camera.h"
+#include "IFCEngineInteract.h"
+
 /* The format of each vertex */
 
 #define		D3DFVF_CUSTOMVERTEX (D3DFVF_XYZ | D3DFVF_NORMAL)
@@ -73,6 +75,7 @@ protected:
 	CString m_server;
 	HWND m_hwndRenderWindow;
 	bool m_initialized;
+	CIFCEngineInteract *m_engineInteract;
 
 	LPDIRECT3D9            m_pD3D;			// Used to create the D3DDevice
 	LPDIRECT3DDEVICE9       m_pd3dDevice;	// Our rendering device
