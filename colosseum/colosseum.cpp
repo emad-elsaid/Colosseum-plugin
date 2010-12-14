@@ -30,8 +30,10 @@ BOOL CColosseumApp::InitInstance()
 		// TODO: Add your own module initialization code here.
 		
 		/* Intialize the schema name*/
-		g_ifcSchemaName = new char[strlen("E:\\Dev\\Colosseum-plugin\\Debug\\IFC2X3_TC1.exp")+1];
-		memcpy(g_ifcSchemaName, "E:\\Dev\\Colosseum-plugin\\Debug\\IFC2X3_TC1.exp", strlen("E:\\Dev\\Colosseum-plugin\\Debug\\IFC2X3_TC1.exp")+1);
+		int	i = strlen(this->m_pszHelpFilePath) - strlen(this->m_pszExeName) - 4;
+		g_ifcSchemaName = new char[i+strlen("IFC2X3.exp")+1];
+		memcpy(&g_ifcSchemaName[0], this->m_pszHelpFilePath, i);
+		memcpy(&g_ifcSchemaName[i], "IFC2X3.exp", strlen("IFC2X3.exp")+1);
 
 	}
 

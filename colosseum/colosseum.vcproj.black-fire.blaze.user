@@ -9,7 +9,7 @@
 			Name="Debug|Win32"
 			>
 			<DebugSettings
-				Command=""
+				Command="C:\Program Files\Mozilla Firefox 4.0 Beta 6\firefox.exe"
 				WorkingDirectory=""
 				CommandArguments=""
 				Attach="false"
@@ -17,12 +17,12 @@
 				Remote="1"
 				RemoteMachine="BLACK-FIRE"
 				RemoteCommand=""
-				HttpUrl=""
+				HttpUrl="D:\graduation project\IFC Engine\IFCEngineDLLv1.03 (build 3365)\VisualC_32bit\colosseum\Debug\test.html"
 				PDBPath=""
 				SQLDebugging=""
 				Environment=""
 				EnvironmentMerge="true"
-				DebuggerFlavor=""
+				DebuggerFlavor="4"
 				MPIRunCommand=""
 				MPIRunArguments=""
 				MPIRunWorkingDirectory=""

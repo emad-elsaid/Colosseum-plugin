@@ -83,6 +83,9 @@ protected:
 
     D3DPRESENT_PARAMETERS	m_d3dpp;
 
+	/* camera object */
+	CCamera *m_camera;
+
 /* DirectX related functions */
 	void	initializeDevice();
 	void	initializeDeviceBuffer();

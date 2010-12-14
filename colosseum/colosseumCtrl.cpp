@@ -13,7 +13,7 @@
 
 /* An error indication value non-zero if error exists */
 int		g_directXStatus = 0;
-CCamera *g_camera = new CCamera(D3DXVECTOR3(0,0,-2.5f));
+
 float	* g_pVerticesDeviceBuffer;
 
 extern int		g_noVertices, g_noIndices, * g_pIndices;
@@ -133,6 +133,7 @@ CColosseumCtrl::CColosseumCtrl() : m_width(0), m_height(0), m_server(""), MULTIP
 	m_pVB = NULL;
 	m_initialized = false;
 	m_engineInteract = new CIFCEngineInteract();
+	m_camera = new CCamera(D3DXVECTOR3(0,0,-2.5f));
 	/* Reset D3DPRESENT_PARAMETERS structure */
 	memset( &m_d3dpp, 0, sizeof(m_d3dpp) );
 	
@@ -140,11 +141,75 @@ CColosseumCtrl::CColosseumCtrl() : m_width(0), m_height(0), m_server(""), MULTIP
 
 }
 
+int		iZoomMouseX, iZoomMouseY;
+
 LRESULT CColosseumCtrl::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 {
+	int		iMouseX = LOWORD(lParam),
+			iMouseY = HIWORD(lParam);
+
 	switch (message)
 	{
+		case WM_LBUTTONDOWN:
+		case WM_MBUTTONDOWN:
+		case WM_RBUTTONDOWN:
+			iZoomMouseX = iMouseX;
+			iZoomMouseY = iMouseY;
+			break;
+		case WM_MOUSEMOVE:
+			/*
+			 *	Mouse moved
+			 */
+			
+			if(MK_LBUTTON&wParam)
+			{
+				
+				SetCapture();
+				SetCursor(NULL);
+				
+				m_camera->rotateCamera((float)(iMouseY-iZoomMouseY), (float)(iMouseX-iZoomMouseX)); 
+
+				if (m_initialized) {
+					render();
+				}
+				ReleaseCapture();
+				iZoomMouseX = iMouseX;
+				iZoomMouseY = iMouseY;
+			}
+			
+			break;
 	
+		case WM_KEYDOWN: //If a Key is down
+			switch(wParam)
+			{
+			case 0x57: //W KEY
+				
+				m_camera->moveForward(MULTIPLY_RATIO);
+								
+				if  (m_initialized) {
+					render();
+				}
+				break;
+			case 0x53: // S KEY
+				m_camera->moveForward(-1.0f * MULTIPLY_RATIO);
+				if  (m_initialized) {
+					render();
+				}
+				break;
+			case 0x41:// A KEY
+				m_camera->moveRight(-1.0f * MULTIPLY_RATIO);
+				if(m_initialized)
+					render();
+				break;
+			
+			case 0x44: // D KEY
+				m_camera->moveRight( MULTIPLY_RATIO );
+				if(m_initialized)
+					render();
+				break;
+			}
+			break;
+
 		case WM_SHOWWINDOW:
 			switch	(m_engineInteract->retrieveObjectGroups((m_server.GetBuffer(0)))) {
 			case 0:
@@ -161,6 +226,7 @@ LRESULT CColosseumCtrl::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 
 			m_hwndRenderWindow = this->m_hWnd;
 			initializeDevice();
+			initializeDeviceBuffer();
 			
 			
 			break;
@@ -179,6 +245,7 @@ CColosseumCtrl::~CColosseumCtrl()
 {
 	// TODO: Cleanup your control's instance data here.
 	delete m_engineInteract;
+	delete m_camera;
 }
 
 
@@ -413,7 +480,7 @@ void	CColosseumCtrl::render()
 			mtrl.Emissive.a = 0.5f;
 
 			m_pd3dDevice->SetMaterial(&mtrl);
-			//TODO: make first instance private
+			
 			STRUCT_INSTANCES	* instance = m_engineInteract->getFirstInstance();
 			while  (instance) {
 				if	( (instance->parent)  &&
@@ -556,7 +623,7 @@ int	CColosseumCtrl::setupMatrices()
 
 	D3DXMATRIXA16 matrix;
 	//Calculate the new view matrix for the camera
-	g_camera->calculateViewMatrix(&matrix);
+	this->m_camera->calculateViewMatrix(&matrix);
 	
 	if( FAILED( m_pd3dDevice->SetTransform( D3DTS_VIEW, &matrix ) ) ) {
 		g_directXStatus = -1;

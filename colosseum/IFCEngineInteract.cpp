@@ -113,7 +113,7 @@ int	 CIFCEngineInteract::retrieveObjectGroups(char * fileName)
 		retrieveObjects(_T("IFCGRID"), _T("Grids"));
 		retrieveObjects(_T("IFCMECHANICALFASTENER"), _T("Mechanical Fasteners"));		
 		retrieveObjects(_T("IFCMEMBER"), _T("Members"));		
-		retrieveObjects(_T("IFCOPENINGELEMENT"), _T("Opening Elements"));		
+		//retrieveObjects(_T("IFCOPENINGELEMENT"), _T("Opening Elements"));		
 		retrieveObjects(_T("IFCPILE"), _T("Piles"));		
 		retrieveObjects(_T("IFCPLATE"), _T("Plates"));		
 		retrieveObjects(_T("IFCPROJECTIONELEMENT"), _T("Projection Elements"));		
@@ -127,7 +127,7 @@ int	 CIFCEngineInteract::retrieveObjectGroups(char * fileName)
 		retrieveObjects(_T("IFCROUNDEDEDGEFEATURE"), _T("Rounded Edge Features"));		
 		retrieveObjects(_T("IFCSITE"), _T("Sites"));		
 		retrieveObjects(_T("IFCSLAB"), _T("Slabs"));		
-		retrieveObjects(_T("IFCSPACE"), _T("Spaces"));		
+		//retrieveObjects(_T("IFCSPACE"), _T("Spaces"));		
 		retrieveObjects(_T("IFCSTAIR"), _T("Stairs"));		
 		retrieveObjects(_T("IFCSTAIRFLIGHT"), _T("Stair Flights"));		
 		retrieveObjects(_T("IFCSTRUCTURALCURVECONNECTION"), _T("Structural Curve Connections"));		
