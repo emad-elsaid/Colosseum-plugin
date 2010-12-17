@@ -29,6 +29,9 @@ IMPLEMENT_DYNCREATE(CColosseumCtrl, COleControl)
 
 BEGIN_MESSAGE_MAP(CColosseumCtrl, COleControl)
 	ON_OLEVERB(AFX_IDS_VERB_PROPERTIES, OnProperties)
+	ON_WM_KEYDOWN()
+	ON_WM_SHOWWINDOW()
+	ON_WM_MOUSEMOVE()
 END_MESSAGE_MAP()
 
 
@@ -127,7 +130,7 @@ CColosseumCtrl::CColosseumCtrl() : m_width(0), m_height(0), m_server(""), MULTIP
 {
 	InitializeIIDs(&IID_Dcolosseum, &IID_DcolosseumEvents);
 	// TODO: Initialize your control's instance data here.
-
+	
 	m_pD3D = NULL;
 	m_pd3dDevice = NULL;
 	m_pVB = NULL;
@@ -141,47 +144,20 @@ CColosseumCtrl::CColosseumCtrl() : m_width(0), m_height(0), m_server(""), MULTIP
 
 }
 
-int		iZoomMouseX, iZoomMouseY;
 
-LRESULT CColosseumCtrl::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
+
+/* Called when a key is pressed */
+void CColosseumCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-	int		iMouseX = LOWORD(lParam),
-			iMouseY = HIWORD(lParam);
-
-	switch (message)
-	{
-		case WM_LBUTTONDOWN:
-		case WM_MBUTTONDOWN:
-		case WM_RBUTTONDOWN:
-			iZoomMouseX = iMouseX;
-			iZoomMouseY = iMouseY;
-			break;
-		case WM_MOUSEMOVE:
-			/*
-			 *	Mouse moved
-			 */
-			
-			if(MK_LBUTTON&wParam)
-			{
-				
-				SetCapture();
-				SetCursor(NULL);
-				
-				m_camera->rotateCamera((float)(iMouseY-iZoomMouseY), (float)(iMouseX-iZoomMouseX)); 
-
-				if (m_initialized) {
-					render();
-				}
-				ReleaseCapture();
-				iZoomMouseX = iMouseX;
-				iZoomMouseY = iMouseY;
-			}
-			
-			break;
-	
-		case WM_KEYDOWN: //If a Key is down
-			switch(wParam)
-			{
+	/* This method is called by the MFC messaging system when a WM_ONKEYDOWN
+	 * is sent this handles the keys pressed when using the control 
+	 * The keys handled are
+	 * W key for moving forward
+	 * S for moving backward
+	 * A for left strafing
+	 * D for right straging
+	 */
+	switch( nChar ) {
 			case 0x57: //W KEY
 				
 				m_camera->moveForward(MULTIPLY_RATIO);
@@ -191,12 +167,14 @@ LRESULT CColosseumCtrl::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 				}
 				break;
 			case 0x53: // S KEY
+				/* Inverse the direction by multiplying with -1*/
 				m_camera->moveForward(-1.0f * MULTIPLY_RATIO);
 				if  (m_initialized) {
 					render();
 				}
 				break;
 			case 0x41:// A KEY
+				/* Inverse the direction by multiplying with -1*/
 				m_camera->moveRight(-1.0f * MULTIPLY_RATIO);
 				if(m_initialized)
 					render();
@@ -207,33 +185,98 @@ LRESULT CColosseumCtrl::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 				if(m_initialized)
 					render();
 				break;
+	 }
+}
+
+/* Called when the control is Shown*/
+void CColosseumCtrl::OnShowWindow(BOOL bShow, UINT nStatus)
+{
+	/* This method is called the instance the control is show to the user
+	 * What happens here is that we get the file name from m_server and convert it from
+	 * CString to char* and send it to the CIFCEngineInteract object to retrieve information 
+	 * from the file and initialize the CIFCEngineInteract object.
+	 * We then initialize the m_width and m_height with the width and height of the control
+	 * sent with <OBJECT> tag in the html file.
+	 * After that we assign to m_hwndRenderWindow the handle of the window that we are going to draw
+	 * in because we are going to use to initialize the DirectX device module and initialize the device buffer .
+	 * Lastly we render the changes.
+	 */
+	if ( 0 == m_engineInteract->retrieveObjectGroups((m_server.GetBuffer(0))))
+		m_engineInteract->enrichObjectGroups();
+	else	
+		ASSERT(1==0);
+	
+	CRect rc;
+	GetWindowRect(&rc);
+	m_width = rc.Width();
+	m_height = rc.Height();
+
+	m_hwndRenderWindow = this->m_hWnd;
+	initializeDevice();
+	initializeDeviceBuffer();
+	
+	if(m_initialized)
+			render();		
+}
+
+int		iZoomMouseX, iZoomMouseY;
+
+void CColosseumCtrl::OnMouseMove(UINT nFlags, CPoint point)
+{
+	/* This method handle the mouse movement and adjust the view of the camera 
+	 * according to the changes made to the coordinates
+	 * NOTE: Remember the camera i am talking about is a First Person Shooter camera
+	 */
+	int iMouseX = point.x, 
+		iMouseY = point.y;
+	
+	switch(nFlags)
+	{
+		case MK_LBUTTON:
+			
+			//SetCapture();
+			SetCursor(NULL);
+				
+			m_camera->rotateCamera((float)(iMouseY-iZoomMouseY), (float)(iMouseX-iZoomMouseX)); 
+
+			if (m_initialized) {
+				render();
 			}
+			//ReleaseCapture();
+			iZoomMouseX = iMouseX;
+			iZoomMouseY = iMouseY;
 			break;
+	}
+}
 
-		case WM_SHOWWINDOW:
-			switch	(m_engineInteract->retrieveObjectGroups((m_server.GetBuffer(0)))) {
-			case 0:
-				m_engineInteract->enrichObjectGroups();
-				break;
-			default:
-				ASSERT(1==0);
-				break;
-			}
-			CRect rc;
-			this->GetWindowRect(&rc);
-			m_width = rc.Width();
-			m_height = rc.Height();
-
-			m_hwndRenderWindow = this->m_hWnd;
-			initializeDevice();
-			initializeDeviceBuffer();
-			
-			
+LRESULT CColosseumCtrl::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
+{
+	 /* I left the WindowProc method so that leave the window rendering while 
+	  * there are no messages to handle.
+	  * I left some message handling to determine the coordinates of the previous frame 
+	  * so that it is dealt with in the OnMouseMove method
+	  */
+	
+	switch (message)
+	{
+		case WM_LBUTTONDOWN:
+		case WM_MBUTTONDOWN:
+		case WM_RBUTTONDOWN:
+			/* Note the lParam is sent as 4 bytes each 2 bytes contain the X coordinates of the mouse 
+			 * and Y coordinates of the mouse the lower 2 bytes are for the X component and the higher 2 bytes are 
+			 * for the Y.
+			 * Example:- 
+			 * 0x010e01b5 the low bytes are 0x01b5 which is equal to 437 decimal therefore the X-Coordinate's value is 437
+			 * the higher bytes are 0x010e which is equal to 270 decimal therefore the Y-Coordinates's value is 270
+			 * hope that you got it right */
+			iZoomMouseX = LOWORD(lParam); 
+			iZoomMouseY = HIWORD(lParam);
 			break;
 	}
 	if(m_initialized)
 			render();
 	return COleControl::WindowProc(message, wParam, lParam);
+	
 	
 }
 
@@ -258,8 +301,6 @@ void CColosseumCtrl::OnDraw(
 	if (!pdc)
 		return;
 	// TODO: Replace the following code with your own drawing code.
-	//pdc->FillRect(rcBounds, CBrush::FromHandle((HBRUSH)GetStockObject(WHITE_BRUSH)));
-	//pdc->Ellipse(rcBounds);
 }
 
 

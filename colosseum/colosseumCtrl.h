@@ -38,6 +38,9 @@ public:
 // Overrides
 public:
 	virtual void OnDraw(CDC* pdc, const CRect& rcBounds, const CRect& rcInvalid);
+	void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
+	void OnShowWindow(BOOL bShow, UINT nStatus);
+	void OnMouseMove(UINT nFlags, CPoint point);
 	virtual void DoPropExchange(CPropExchange* pPX);
 	virtual void OnResetState();
 	virtual DWORD GetControlFlags();
@@ -51,7 +54,7 @@ protected:
 	
 
 	virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
-
+	
 
 	DECLARE_OLECREATE_EX(CColosseumCtrl)    // Class factory and guid
 	DECLARE_OLETYPELIB(CColosseumCtrl)      // GetTypeInfo
